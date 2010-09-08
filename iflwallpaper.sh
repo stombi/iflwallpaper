@@ -18,6 +18,9 @@ USER_AGENT="Mozilla/5.0 (X11; U; Linux i686; fr; rv:1.9.1.1) Gecko/20090715 Fire
 FEED_URL="http://feeds.feedburner.com/InterfaceliftNewestWallpaper"
 RESOLUTION="1920x1200"
 BG_PATH="$HOME/wallpaper.jpg"
+TMP_PATH="$HOME/wallpaper.tmp"
 SET_BG="gconftool-2 -t string -s /desktop/gnome/background/picture_filename $BG_PATH"
 
-wget -U "${USER_AGENT}" -q -O- ${FEED_URL} | grep -P -o 'http://*[^:]*\.jpg' | head -n1 | sed -e 's/previews/grab/g' | sed -e 's/\.jpg/_'${RESOLUTION}'\.jpg/g' | xargs wget -c -q -U "${USER_AGENT}" -O ${BG_PATH} && ${SET_BG}
+wget -U "${USER_AGENT}" -q -O- ${FEED_URL} | grep -P -o 'http://*[^:]*\.jpg' | head -n1 | sed -e 's/previews/grab/g' | sed -e 's/\.jpg/_'${RESOLUTION}'\.jpg/g' | xargs wget -c -q -U "${USER_AGENT}" -O ${TMP_PATH}
+mv ${TMP_PATH} ${BG_PATH}
+${SET_BG}
