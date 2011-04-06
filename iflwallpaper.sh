@@ -21,6 +21,6 @@ BG_PATH="$HOME/wallpaper.jpg"
 TMP_PATH="$HOME/wallpaper.tmp"
 SET_BG="gconftool-2 -t string -s /desktop/gnome/background/picture_filename $BG_PATH"
 
-wget -U "${USER_AGENT}" -q -O- ${FEED_URL} | grep -P -o 'http://*[^:]*\.jpg' | head -n1 | sed -e 's/previews/i8r4q/g' | sed -e 's/\.jpg/_'${RESOLUTION}'\.jpg/g' | xargs wget -c -q -U "${USER_AGENT}" -O ${TMP_PATH}
+wget -U "${USER_AGENT}" -q -O- ${FEED_URL} | grep -P -o 'http://*[^:]*\.jpg' | head -n1 | sed -e 's/previews/7yz4ma1/g' | sed -e 's/\.jpg/_'${RESOLUTION}'\.jpg/g' | xargs wget -c -q -U "${USER_AGENT}" -O ${TMP_PATH}
 mv ${TMP_PATH} ${BG_PATH}
 ${SET_BG}
