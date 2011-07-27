@@ -19,7 +19,10 @@ FEED_URL="http://feeds.feedburner.com/InterfaceliftNewestWallpaper"
 RESOLUTION="1920x1200"
 BG_PATH="$HOME/wallpaper.jpg"
 TMP_PATH="$HOME/wallpaper.tmp"
+# GNOME 2
 SET_BG="gconftool-2 -t string -s /desktop/gnome/background/picture_filename $BG_PATH"
+# GNOME 3
+# SET_BG="gsettings set org.gnome.desktop.background picture-uri 'file://$BG_PATH'"
 
 wget -U "${USER_AGENT}" -q -O- ${FEED_URL} | grep -P -o 'http://*[^:]*\.jpg' | head -n1 | sed -e 's/previews/7yz4ma1/g' | sed -e 's/\.jpg/_'${RESOLUTION}'\.jpg/g' | xargs wget -c -q -U "${USER_AGENT}" -O ${TMP_PATH}
 mv ${TMP_PATH} ${BG_PATH}
