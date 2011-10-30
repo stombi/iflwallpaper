@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation; either version 2 of the License, or
@@ -19,11 +19,31 @@ FEED_URL="http://feeds.feedburner.com/InterfaceliftNewestWallpaper"
 RESOLUTION="1920x1200"
 BG_PATH="$HOME/wallpaper.jpg"
 TMP_PATH="$HOME/wallpaper.tmp"
+LAST_WALL="$HOME/wallpaper.last"
 # GNOME 2
 SET_BG="gconftool-2 -t string -s /desktop/gnome/background/picture_filename $BG_PATH"
 # GNOME 3
 # SET_BG="gsettings set org.gnome.desktop.background picture-uri 'file://$BG_PATH'"
 
-wget -U "${USER_AGENT}" -q -O- ${FEED_URL} | grep -P -o 'http://*[^:]*\.jpg' | head -n1 | sed -e 's/previews/7yz4ma1/g' | sed -e 's/\.jpg/_'${RESOLUTION}'\.jpg/g' | xargs wget -c -q -U "${USER_AGENT}" -O ${TMP_PATH}
-mv ${TMP_PATH} ${BG_PATH}
-${SET_BG}
+function get_wall_filename {
+	wget -U "${USER_AGENT}" -q -O- ${FEED_URL} | grep -P -o 'http://*[^:]*\.jpg' | head -n1 | sed -e 's/previews/7yz4ma1/g' | sed -e 's/\.jpg/_'${RESOLUTION}'\.jpg/g'
+}
+function save_wall_filename {
+	echo ${1} > ${LAST_WALL}
+}
+function get_last_filename {
+	cat ${LAST_WALL}
+}
+function download_wallpaper {
+	wget -U "${USER_AGENT}" -O ${TMP_PATH} ${1}
+	mv ${TMP_PATH} ${BG_PATH}
+}
+
+NEW=$(get_wall_filename)
+
+if [ ${NEW} != $(get_last_filename) ] 
+then 
+	download_wallpaper "${NEW}"
+	save_wall_filename "${NEW}"
+	${SET_BG}
+fi 
