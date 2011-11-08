@@ -19,7 +19,7 @@ FEED_URL="http://feeds.feedburner.com/InterfaceliftNewestWallpaper"
 RESOLUTION="1920x1200"
 BASE_PATH="$HOME/.local/share/iflwallpaper"
 
-if ![ -d ${BASE_PATH} ]
+if [ ! -d ${BASE_PATH} ]
 then
 	mkdir -p ${BASE_PATH}
 fi
