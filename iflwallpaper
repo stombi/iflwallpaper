@@ -17,9 +17,16 @@
 USER_AGENT="Mozilla/5.0 (X11; U; Linux i686; fr; rv:1.9.1.1) Gecko/20090715 Firefox/3.5.1"
 FEED_URL="http://feeds.feedburner.com/InterfaceliftNewestWallpaper"
 RESOLUTION="1920x1200"
-BG_PATH="$HOME/wallpaper.jpg"
-TMP_PATH="$HOME/wallpaper.tmp"
-LAST_WALL="$HOME/wallpaper.last"
+BASE_PATH="$HOME/.local/share/iflwallpaper"
+
+if ![ -d ${BASE_PATH} ]
+then
+	mkdir -p ${BASE_PATH}
+fi
+
+BG_PATH="${BASE_PATH}/wallpaper.jpg"
+TMP_PATH="${BASE_PATH}/wallpaper.tmp"
+LAST_WALL="${BASE_PATH}/wallpaper.last"
 # GNOME 2
 # SET_BG="gconftool-2 -t string -s /desktop/gnome/background/picture_filename $BG_PATH"
 # GNOME 3
