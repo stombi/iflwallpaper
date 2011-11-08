@@ -21,9 +21,9 @@ BG_PATH="$HOME/wallpaper.jpg"
 TMP_PATH="$HOME/wallpaper.tmp"
 LAST_WALL="$HOME/wallpaper.last"
 # GNOME 2
-SET_BG="gconftool-2 -t string -s /desktop/gnome/background/picture_filename $BG_PATH"
+# SET_BG="gconftool-2 -t string -s /desktop/gnome/background/picture_filename $BG_PATH"
 # GNOME 3
-# SET_BG="gsettings set org.gnome.desktop.background picture-uri 'file://$BG_PATH'"
+SET_BG="gsettings set org.gnome.desktop.background picture-uri 'file://$BG_PATH'"
 
 function get_wall_filename {
 	wget -U "${USER_AGENT}" -q -O- ${FEED_URL} | grep -P -o 'http://*[^:]*\.jpg' | head -n1 | sed -e 's/previews/7yz4ma1/g' | sed -e 's/\.jpg/_'${RESOLUTION}'\.jpg/g'
@@ -32,10 +32,16 @@ function save_wall_filename {
 	echo ${1} > ${LAST_WALL}
 }
 function get_last_filename {
-	cat ${LAST_WALL}
+	if [ -f ${LAST_WALL} ]
+	then
+		cat ${LAST_WALL}
+	else
+		echo "init" > ${LAST_WALL}
+		cat ${LAST_WALL}
+	fi
 }
 function download_wallpaper {
-	wget -U "${USER_AGENT}" -O ${TMP_PATH} ${1}
+	wget -U "${USER_AGENT}" -q -O ${TMP_PATH} ${1}
 	mv ${TMP_PATH} ${BG_PATH}
 }
 
