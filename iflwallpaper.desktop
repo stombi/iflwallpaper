@@ -1,0 +1,17 @@
+[Desktop Entry]
+Name=IFL Wallpaper
+Comment=Get the lastest interfacelift.com wallpaper
+Exec=iflwallpaper
+Icon=wallpaper
+Terminal=false
+Type=Application
+StartupNotify=true
+Categories=GNOME;GTK;Graphics;
+X-GNOME-Gettext-Domain=iflwallpaper
+
+X-Ayatana-Desktop-Shortcuts=Config;
+
+[Config Shortcut Group]
+Name=Config  
+Exec=iflwallpaper conf  
+OnlyShowIn=Unity
