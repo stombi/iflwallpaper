@@ -14,24 +14,29 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 # MA 02110-1301, USA.
 
-USER_AGENT="Mozilla/5.0 (X11; U; Linux i686; fr; rv:1.9.1.1) Gecko/20090715 Firefox/3.5.1"
-FEED_URL="http://feeds.feedburner.com/InterfaceliftNewestWallpaper"
+#
+#	FUNCTIONS
+#
+
+function set_default_config {
+	cat > ${BASE_PATH}/config <<EOF
+# User agent
+USER_AGENT="Mozilla/5.0 (Ubuntu; X11; Linux x86_64; rv:8.0) Gecko/20100101 Firefox/8.0"
+
+# Desktop [GNOME2|GNOME3]
+DESKTOP="GNOME3"
+
+# Resolution 
+# [320x240|320x400|320x480|360x480|480x272|480x800|600x1024|640x480|640x960|800x480|960x800|960x854|
+# 1024x1024|1024x600|1024x768|1080x960|1280x1024|1280x720|1280x800|1280x960|1366x768|1400x1050|1440x900|
+# 1600x1200|1600x900|1680x1050|1920x1080|1920x1200|2048x2048|2560x1440|2560x1600]
 RESOLUTION="1920x1200"
-BASE_PATH="$HOME/.local/share/iflwallpaper"
-
-if [ ! -d ${BASE_PATH} ]
-then
-	mkdir -p ${BASE_PATH}
-fi
-
-BG_PATH="${BASE_PATH}/wallpaper.jpg"
-TMP_PATH="${BASE_PATH}/wallpaper.tmp"
-LAST_WALL="${BASE_PATH}/wallpaper.last"
-# GNOME 2
-# SET_BG="gconftool-2 -t string -s /desktop/gnome/background/picture_filename $BG_PATH"
-# GNOME 3
-SET_BG="gsettings set org.gnome.desktop.background picture-uri 'file://$BG_PATH'"
-
+EOF
+}
+function edit_config {
+	gedit "${BASE_PATH}/config"
+	exit 0;
+}
 function get_wall_filename {
 	wget -U "${USER_AGENT}" -q -O- ${FEED_URL} | grep -P -o 'http://*[^:]*\.jpg' | head -n1 | sed -e 's/previews/7yz4ma1/g' | sed -e 's/\.jpg/_'${RESOLUTION}'\.jpg/g'
 }
@@ -52,11 +57,43 @@ function download_wallpaper {
 	mv ${TMP_PATH} ${BG_PATH}
 }
 
+#
+#	SCRIPT
+#
+
+FEED_URL="http://feeds.feedburner.com/InterfaceliftNewestWallpaper"
+BASE_PATH="$HOME/.local/share/iflwallpaper"
+BG_PATH="${BASE_PATH}/wallpaper.jpg"
+TMP_PATH="${BASE_PATH}/wallpaper.tmp"
+LAST_WALL="${BASE_PATH}/wallpaper.last"
+
+if [ ! -d ${BASE_PATH} ]
+then
+	mkdir -p ${BASE_PATH}
+	set_default_config
+	edit_config
+fi
+
+source ${BASE_PATH}/config
+
+if [ "$1" = "conf" ]
+then
+	edit_config
+fi
+
 NEW=$(get_wall_filename)
 
 if [ ${NEW} != $(get_last_filename) ] 
 then 
 	download_wallpaper "${NEW}"
 	save_wall_filename "${NEW}"
-	${SET_BG}
-fi 
+fi
+
+case $DESKTOP in
+	GNOME2)
+		/usr/bin/gconftool-2 -t string -s /desktop/gnome/background/picture_filename ${BG_PATH}
+	;;
+	GNOME3)
+		/usr/bin/gsettings set org.gnome.desktop.background picture-uri file://${BG_PATH}
+	;;
+esac
