@@ -2,7 +2,7 @@
 Name=IFL Wallpaper
 Comment=Get the lastest interfacelift.com wallpaper
 Exec=iflwallpaper
-Icon=wallpaper
+Icon=iflwallpaper
 Terminal=false
 Type=Application
 StartupNotify=true
