@@ -8,6 +8,7 @@ Install
 ----------------------------------------
 
 	git clone https://stombi@github.com/stombi/iflwallpaper.git
+	cd iflwallpaper/
 	./install.sh
 
 Usage
