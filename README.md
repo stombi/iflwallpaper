@@ -7,7 +7,7 @@ grab and set the lastest interfacelift.com wallpaper as a gnome background
 Install
 ----------------------------------------
 
-	git clone https://stombi@github.com/stombi/iflwallpaper.git
+	git clone git://github.com/stombi/iflwallpaper.git
 	cd iflwallpaper/
 	./install.sh
 
