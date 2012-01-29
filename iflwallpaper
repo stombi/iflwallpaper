@@ -31,10 +31,14 @@ DESKTOP="GNOME3"
 # 1024x1024|1024x600|1024x768|1080x960|1280x1024|1280x720|1280x800|1280x960|1366x768|1400x1050|1440x900|
 # 1600x1200|1600x900|1680x1050|1920x1080|1920x1200|2048x2048|2560x1440|2560x1600]
 RESOLUTION="1920x1200"
+
+# Keep old wallpaper
+# [yes|no]
+ARCHIVE="no"
 EOF
 }
 function edit_config {
-	gedit "${BASE_PATH}/config"
+	gnome-text-editor "${BASE_PATH}/config"
 	exit 0;
 }
 function get_wall_filename {
@@ -53,6 +57,19 @@ function get_last_filename {
 	fi
 }
 function download_wallpaper {
+	
+	if [ ${ARCHIVE} = "yes" ]
+	then
+		if [ ! -d ${BASE_PATH}/archive ]
+		then
+			mkdir -p ${BASE_PATH}/archive
+		fi
+		if [ -e ${BG_PATH} ]
+		then
+			cp ${BG_PATH} ${BASE_PATH}/archive/$(date +%s)-wallpaper.jpg
+		fi
+	fi
+
 	wget -U "${USER_AGENT}" -q -O ${TMP_PATH} ${1}
 	mv ${TMP_PATH} ${BG_PATH}
 }
