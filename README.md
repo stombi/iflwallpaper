@@ -47,3 +47,4 @@ Data location
 	~/.local/share/iflwallpaper/config : config file
 	~/.local/share/iflwallpaper/wallpaper.jpg : the wallpaper image
 	~/.local/share/iflwallpaper/wallpaper.last : URL of last downloaded wallpaper
+	~/.local/share/iflwallpaper/archive : archived wallpaper directory
