@@ -111,6 +111,6 @@ case $DESKTOP in
 		/usr/bin/gconftool-2 -t string -s /desktop/gnome/background/picture_filename ${BG_PATH}
 	;;
 	GNOME3)
-		/usr/bin/gsettings set org.gnome.desktop.background picture-uri file://${BG_PATH}
+		/usr/bin/gsettings set org.gnome.desktop.background picture-uri \'file://${BG_PATH}\'
 	;;
 esac
