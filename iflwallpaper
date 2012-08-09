@@ -21,7 +21,7 @@
 function set_default_config {
 	cat > ${BASE_PATH}/config <<EOF
 # User agent
-USER_AGENT="Mozilla/5.0 (Ubuntu; X11; Linux x86_64; rv:8.0) Gecko/20100101 Firefox/8.0"
+USER_AGENT="Mozilla/5.0 (X11; Linux x86_64; rv:14.0) Gecko/20100101 Firefox/14.0.1"
 
 # Desktop [GNOME2|GNOME3]
 DESKTOP="GNOME3"
