@@ -42,7 +42,7 @@ function edit_config {
 	exit 0;
 }
 function get_wall_filename {
-	wget -U "${USER_AGENT}" -q -O- ${FEED_URL} | grep -P -o 'http://*[^:]*\.jpg' | head -n1 | sed -e 's/previews/7yz4ma1/g' | sed -e 's/\.jpg/_'${RESOLUTION}'\.jpg/g'
+	wget -U "${USER_AGENT}" -q -O- ${FEED_URL} | grep -P -o 'http://*[^:]*\.jpg' | head -n1 | sed -e 's/previews/7yz4ma1/g' | sed -e 's/@2x\.jpg/_'${RESOLUTION}'\.jpg/g'
 }
 function save_wall_filename {
 	echo ${1} > ${LAST_WALL}
